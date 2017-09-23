@@ -1,0 +1,63 @@
+﻿<Page
+    x:Class="AniLib.AnimeAltView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AniLib"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="using:AniLib.Models"
+    mc:Ignorable="d">
+
+    <Grid x:Name="Grid" Background="WhiteSmoke">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1.2*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.2*"/>
+            <ColumnDefinition Width="0.6*"/>
+            <ColumnDefinition Width="0.1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.Resources>
+            <Storyboard x:Name="Rating_Anim">
+                <DoubleAnimation Storyboard.TargetName="Rating_Bar"
+                                 Storyboard.TargetProperty="Value"
+                                 EnableDependentAnimation="True"
+                                 From="0"
+                                 To="{x:Bind progressScore}"
+                                 Duration="00:00:01" />
+            </Storyboard>
+        </Grid.Resources>
+
+        <Rectangle x:Name="Cover_Filter" Grid.Row="0" Canvas.ZIndex="2" Grid.ColumnSpan="4" Fill="#D7464646"/>
+        <Image x:Name="Cover_Image" Grid.Row="0" Grid.ColumnSpan="4" Stretch="UniformToFill" Canvas.ZIndex="1" Source="{x:Bind anime.cover}"></Image>
+
+        <TextBlock x:Name="Title" Text="{x:Bind anime.canonicalTitle}" Grid.Column="3" FocusVisualPrimaryBrush="Black" Foreground="#FFFFF8F8" FontSize="48" Canvas.ZIndex="5" VerticalAlignment="Top" Margin="0,50,0,0" FontFamily="Assets/Fonts/RobotoCondensed-Bold.ttf#Roboto Condensed" FontWeight="Bold"/>
+        <ProgressBar x:Name="Rating_Bar" Height="8" Grid.Column="3" Width="350" Minimum="0" Maximum="100" Value="0" HorizontalAlignment="Left" Margin="0,0,0,110" Canvas.ZIndex="5" />
+        <ScrollViewer x:Name="Synopsis_Scroll" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Auto" HorizontalScrollMode="Disabled" Grid.Column="3" Canvas.ZIndex="5" Margin="0,20,0,0" Width="800" Height="120" HorizontalAlignment="Left">
+            <TextBlock x:Name="Synopsis" Text="{x:Bind anime.synopsis}"  Foreground="#FFFFF8F8" FontSize="14"  VerticalAlignment="Top" FontFamily="Assets/Fonts/Roboto-Regular.ttf#Roboto" Margin="0" HorizontalAlignment="Left" Width="800" TextWrapping="WrapWholeWords"/>
+        </ScrollViewer>
+
+        <Image x:Name="Poster_Image" Grid.Column="1" Width="160" Height="250" Canvas.ZIndex="3" Source="{x:Bind anime.poster}"></Image>
+
+        <GridView x:Name="Episode_List" ItemsSource="{x:Bind anime.episodes}" IsItemClickEnabled="True" ItemClick="Episode_List_ItemClick" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" Margin="0">
+            <GridView.ItemContainerStyle>
+                <Style TargetType="FrameworkElement">
+                    <Setter Property="Margin" Value="0 0 20 20"/>
+                </Style>
+            </GridView.ItemContainerStyle>
+
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="data:AnimeEpisode">
+                    <StackPanel Background="#FFFAFAFA" Width="300" Height="200" BorderBrush="Black" Padding="0" Margin="0">
+                        <Image Width="240" Margin="0,18,0,0" Source="{x:Bind thumbnail}" />
+                        <TextBlock FontSize="16" Text="{x:Bind episodeNumber}" FontWeight="Bold" Height="60" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="20,0,0,0" FontFamily="Assets/Fonts/Roboto-Regular.ttf#Roboto"/>
+                    </StackPanel>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+            
+        </GridView>
+    </Grid>
+</Page>

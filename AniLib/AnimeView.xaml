@@ -1,0 +1,53 @@
+﻿<Page
+    x:Class="AniLib.AnimeView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AniLib"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid x:Name="Grid" Background="#FFFAFAFA">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1.3*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.2*"/>
+            <ColumnDefinition Width=".8*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <Rectangle x:Name="Cover_Filter" Grid.Row="0" Canvas.ZIndex="2" Grid.ColumnSpan="3" Fill="#90464646" />
+        <Image x:Name="Cover_Image" Grid.Row="0" Grid.ColumnSpan="3" Stretch="UniformToFill" Canvas.ZIndex="1" d:IsHidden="True" >
+            <Image.Source>
+                <BitmapImage UriSource="{x:Bind anime.coverImage_original}"/>
+            </Image.Source>
+        </Image>
+
+        <TextBlock x:Name="Title" Text="{x:Bind anime.canonicalTitle}" Grid.Column="2" FocusVisualPrimaryBrush="Black" Foreground="#FFFFF8F8" FontSize="48" Canvas.ZIndex="5" VerticalAlignment="Bottom" Margin="40,0,0,0" FontFamily="TechnicBold" />
+        <StackPanel x:Name="Content_Info" Grid.Column="1" Grid.Row="1" Background="White" Canvas.ZIndex="3">
+            <StackPanel.Resources>
+                <Storyboard x:Name="Rating_Anim">
+                    <DoubleAnimation Storyboard.TargetName="Rating_Bar"
+                                     Storyboard.TargetProperty="Value"
+                                     EnableDependentAnimation="True"
+                                     From="0"
+                                     To="{x:Bind progress_score}"
+                                     Duration="00:00:01"/>
+                </Storyboard>
+            </StackPanel.Resources>
+            <Image x:Name="Poster_Image" Width="180" Grid.Column="1" Canvas.ZIndex="3" Height="250" Margin="0,-60,0,0">
+                <Image.Source>
+                    <BitmapImage UriSource="{x:Bind anime.posterImage_medium}"/>
+                </Image.Source>
+            </Image>
+
+            <ProgressBar x:Name="Rating_Bar" Height="8" Minimum="0" Maximum="100" Value="0" Margin="0,5,0,0" Width="210"></ProgressBar>
+            <TextBlock x:Name="Score" Text="{x:Bind score}" Foreground="Gray" FontSize="11" Margin="20,0,0,0"/>
+        </StackPanel>
+        
+        
+
+    </Grid>
+</Page>
