@@ -29,7 +29,7 @@ namespace AniLib {
 		private Double progressScore;
 
 		private string animeTitle;
-		private string score;
+		private string score; 
 
 		public AnimeAltView() {
 			this.InitializeComponent();
