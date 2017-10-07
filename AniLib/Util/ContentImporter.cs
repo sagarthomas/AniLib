@@ -48,7 +48,7 @@ namespace AniLib.Util
 		/// <param name="raw_name"></param>
 		/// <returns></returns>
 		public static string FolderNameParse(string raw_name) {
-			var regex = new Regex("^[\\[\\]()]$"); //Looks for '[' or ']'
+			var regex = new Regex("^[\\[\\]()]$"); //Looks for '[' or ']' or  () 
 			var result = "";
 			var isWriting = true;
 			for (int i = 0; i < raw_name.Length; i++) {
@@ -56,6 +56,8 @@ namespace AniLib.Util
 					isWriting = !isWriting; // Toggle Writing
 				if(isWriting && (raw_name[i] != ']' && raw_name[i] != ')')) {
 					if (raw_name[i] == ' ')
+						result += "%20";
+					else if (raw_name[i] == '_')
 						result += "%20";
 					else
 						result += raw_name[i];
